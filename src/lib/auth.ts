@@ -4,7 +4,6 @@ import GitHubProvider from "next-auth/providers/github";
 import { prisma } from "@/lib/prisma";
 import { env } from "@/lib/env";
 import { Session } from "next-auth";
-import { User } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -22,8 +21,7 @@ export const authOptions: NextAuthOptions = {
     logo: "/images/logo-text.png", // Logo pour la page de connexion
   },
   callbacks: {
-    session: async ({ session, user }: { session: Session; user: User }) => {
-      // Ajouter l'ID et l'image de l'utilisateur à la session
+    session: async ({ session, user }) => {
       session.user.id = user.id;
       session.user.image = user.image;
       return session;
