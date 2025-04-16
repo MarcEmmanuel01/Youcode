@@ -7,6 +7,9 @@ import { Session } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  theme: {
+    logo: "/images/logo-text.png"
+  },
   providers: [
     GitHubProvider({
       clientId: env.GITHUB_ID,
@@ -17,9 +20,6 @@ export const authOptions: NextAuthOptions = {
     strategy: "database", // Stocker les sessions dans la base de données
   },
   secret: env.NEXTAUTH_SECRET,
-  theme: {
-    logo: "/images/logo-text.png", // Logo pour la page de connexion
-  },
   callbacks: {
     session: async ({ session, user }) => {
       session.user.id = user.id;
